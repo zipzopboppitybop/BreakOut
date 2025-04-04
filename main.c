@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
-#include "MyRectangle.h"
 
 // Global Variables
 int screenWidth = 1280;
@@ -10,7 +9,7 @@ SDL_Window* window = NULL;
 SDL_Renderer* renderer = NULL;
 int isRunning = 1;
 // example
-struct My_rectangle rectangle = { 100, 100, 200, 150 };
+SDL_FRect rect = { 100, 100, 200, 150 };
 int rectSpeed = 5;
 
 // Initialize SDL
@@ -56,14 +55,14 @@ void handleEvents() {
 // Update Game Logic
 void update() {
     // Example
-    rectangle.x += rectSpeed;
+    rect.x += rectSpeed;
 
-    if (rectangle.x + rectangle.w > screenWidth)
+    if (rect.x + rect.w > screenWidth)
     {
         rectSpeed *= -1;
     }
 
-    if (rectangle.x < 0)
+    if (rect.x < 0)
     {
         rectSpeed *= -1;
     }
@@ -78,8 +77,7 @@ void render() {
     // Draw a white rectangle
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 
-    // Create rectangle with my_rectangle struct
-    SDL_FRect rect = { rectangle.x, rectangle.y, rectangle.w, rectangle.h };
+    
     SDL_RenderFillRect(renderer, &rect);
 
     SDL_RenderPresent(renderer);
@@ -105,9 +103,6 @@ int main(int argc, char* argv[]) {
         // Limit to 60 FPS
         SDL_Delay(16); 
     }
-
-    // Example
-    print_rectangle(&rectangle);
 
     cleanup();
     return 0;
